@@ -1,0 +1,1 @@
+Para rodar é necessário que se tenha o maven na maquina e o mariaDb.
