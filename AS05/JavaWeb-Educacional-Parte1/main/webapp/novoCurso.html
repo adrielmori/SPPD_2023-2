@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Sistema Academico</title>
+</head>
+<body>
+<h2>Incluir curso</h2>
+
+<form action="controlecurso" method="post">
+
+	<input type="hidden" name="acao" value="incluir"/>
+	Número:
+	<input type="text" value="" name="txtNumero" size="12"/>
+	<br>
+	Nome:
+	<input type="text" value="" name="txtNome" size="50"/>
+	<br>
+	Tipo:
+	<select name="selTipo">
+		<option value="B">Bacharelado</option>
+		<option value="L">Licenciatura</option>
+		<option value="T">Tecnologico</option>
+	</select>
+	
+	<br><br>
+	<input type="submit" value="Gravar"/>
+
+</form>
+
+</body>
+</html>

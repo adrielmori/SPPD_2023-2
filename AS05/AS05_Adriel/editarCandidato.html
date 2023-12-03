@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Candidate</title>
+</head>
+<body>
+
+<script>
+
+    function formatDate(dateString) {
+        const months = [
+            "jan",
+            "feb",
+            "mar",
+            "apr",
+            "may",
+            "jun",
+            "jul",
+            "aug",
+            "sep",
+            "oct",
+            "nov",
+            "dec"
+        ];
+
+        const dateParts = dateString.split(" ");
+        const day = dateParts[1].replace(",", "");
+        const month = months.indexOf(dateParts[0].replace(".", "")) + 1;
+        const year = dateParts[2];
+
+        const formattedDate = year + "-" + month + "-" + day;
+
+        return new Date(formattedDate);
+    }
+
+    function gender(sex) {
+        if (sex === "H") {
+            return "Male";
+        } else if (sex === "M") {
+            return "Female";
+        } else {
+            return "Prefer not to disclose";
+        }
+    }
+
+    function edit(id) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) {
+                var candidate = JSON.parse(this.responseText);
+                document.getElementById("txtName").value = candidate.name;
+                document.getElementById("selGender").value = candidate.gender;
+                const formattedDate = formatDate(candidate.date_of_birth);
+                document.getElementById("txtBirthDate").value = formattedDate.toISOString().split("T")[0];
+
+                document.getElementById("txtDesiredPosition").value = candidate.desired_position;
+                document.getElementById("txtResume").value = candidate.resume;
+            }
+        };
+        xhttp.open("GET", "http://localhost:8080/AS05/candidate/" + id, true);
+        xhttp.send();
+    }
+</script>
+
+<h2>Edit Candidate</h2>
+
+Enter the candidate's code:
+
+<form action="candidate" method="post">
+    <input type="number" value="0" name="txtCode">
+    <input type="button" value="Search" onclick="edit(document.getElementsByName('txtCode')[0].value)">
+    <br><br>
+
+    <input type="hidden" name="action" value="update"/>
+    Candidate's Name:
+    <input type="text" value="" name="txtName" id="txtName" size="50"/>
+    <br>
+    Gender:
+    <select name="selGender" id="selGender">
+        <option value="H">Male</option>
+        <option value="M">Female</option>
+        <option value="N">Prefer not to disclose</option>
+    </select>
+    <br>
+    Date of Birth:
+    <input type="date" value="" name="txtBirthDate" id="txtBirthDate" size="50"/>
+    <br>
+    Desired Position:
+    <input type="text" value="" name="txtDesiredPosition" id="txtDesiredPosition" size="50"/>
+    <br>
+    Resume:
+    <input type="text" value="" name="txtResume" id="txtResume" size="50"/>
+
+    <br><br>
+    <input type="submit" value="Save"/>
+</form>
+
+</body>
+</html>

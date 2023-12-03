@@ -1,0 +1,8 @@
+create table candidato (
+    codigo INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(60) NOT NULL,
+    sexo CHAR(1) NOT NULL,
+    data_nascimento DATE NOT NULL,
+    cargo_pretendido VARCHAR(25) NOT NULL,
+    texto_curriculo VARCHAR(800) NOT NULL
+);

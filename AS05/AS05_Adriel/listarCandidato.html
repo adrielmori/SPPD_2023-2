@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Listar de Candidatos</title>
+</head>
+<body>
+<h2>Listar Candidatos</h2>
+
+<script>
+    function excluir(id) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200){
+                alert("Candidato excluído com sucesso!");
+                candidatos();
+            }
+        };
+        xhttp.open("DELETE", "http://localhost:8080/AS05/candidat/" + id, true);
+        xhttp.send();
+    }
+
+    function candidatos() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200){
+                var candidatos = JSON.parse(this.responseText);
+                var tabela = "<table border='1'>";
+                tabela += "<tr><th>Nome</th><th>Sexo</th><th>Data de Nascimento</th><th>Cargo Pretendido</th><th>Curriculo</th><th>Excluir</th></tr>";
+                for (var i = 0; i < candidatos.length; i++){
+                    tabela += "<tr>";
+                    tabela += "<td>" + candidatos[i].nome + "</td>";
+                    tabela += "<td>" + candidatos[i].sexo + "</td>";
+                    tabela += "<td>" + candidatos[i].data_nasc + "</td>";
+                    tabela += "<td>" + candidatos[i].cargo_pretendido + "</td>";
+                    tabela += "<td>" + candidatos[i].texto_curriculo + "</td>";
+                    tabela += "<td><a href='javascript:excluir(" + candidatos[i].codigo + ")'>Excluir</a></td>";
+                    tabela += "</tr>";
+                }
+                tabela += "</table>";
+                document.getElementById("demo").innerHTML = tabela;
+            }
+        };
+        xhttp.open("GET", "http://localhost:8080/AS05/candidate", true);
+        xhttp.send();
+    }
+
+    candidatos();
+</script>
+
+<a href="index.html">Voltar</a>
+<br><br>
+<div id="demo"></div>
+
+
+</body>
+</html>
