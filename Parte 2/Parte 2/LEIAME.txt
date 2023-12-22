@@ -1,0 +1,3 @@
+Para rodar é necessário que se tenha o maven na maquina e o mariaDb.
+
+O banco de dado está em ./avaliacao/src/main/resources.
